@@ -11,6 +11,16 @@ export class initialMigration1655769166726 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "user" ADD CONSTRAINT "FK_342497b574edb2309ec8c6b62aa" FOREIGN KEY ("cartId") REFERENCES "cart"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "dvd" ADD CONSTRAINT "FK_a68c996998e86e22dc2580918c3" FOREIGN KEY ("stockId") REFERENCES "stock"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "cart" ADD CONSTRAINT "FK_9ed71a7c7e8e5e85c857bf79682" FOREIGN KEY ("dvdId") REFERENCES "dvd"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(
+      `
+        INSERT INTO "users"
+            ("name", "email", "password", "isAdmin")
+        VALUES
+            ('${process.env.ADMIN_NAME}', '${
+        process.env.ADMIN_EMAIL
+      }', '${hashSync(process.env.ADMIN_PWD, 10)}', true)
+        `
+    );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
