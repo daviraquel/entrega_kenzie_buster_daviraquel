@@ -1,12 +1,10 @@
 import { Express } from "express";
 import { userRoutes } from "./user.routes";
-import { productRoutes } from "./product.routes";
+import { dvdRoutes } from "./dvd.routes";
 import { cartRoutes } from "./cart.routes";
-import { buyRoutes } from "./buy.routes";
 
 export const appRoutes = (app: Express) => {
-  app.use("/users", userRoutes());
-  app.use("/product", productRoutes());
-  app.use("/cart", cartRoutes());
-  app.use("/buy", buyRoutes());
+  app.use("/api/users", userRoutes());
+  app.use("/api/dvds", dvdRoutes());
+  app.use("/api/carts", cartRoutes());
 };

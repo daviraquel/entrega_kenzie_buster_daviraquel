@@ -1,39 +1,33 @@
+import { compare } from "bcrypt";
 import {
   Entity,
   Column,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   OneToOne,
   JoinColumn,
   OneToMany,
 } from "typeorm";
-import { v4 as uuid } from "uuid";
-import { Buy } from "./buy.entity";
 
 import { Cart } from "./cart.entity";
 
 @Entity()
 export class User {
-  @PrimaryColumn("uuid")
-  readonly id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id?: string;
   @Column()
   name: string;
-  @Column()
+  @Column({ unique: true })
   email: string;
   @Column()
   password: string;
+  @Column({ default: false })
+  isAdm: boolean;
 
-  @OneToMany((type) => Buy, (buy) => buy.user, { eager: true })
-  buys: Buy[];
-
-  @OneToOne((type) => Cart, {
-    eager: true,
-  })
+  @OneToOne((type) => Cart, (cart) => cart.user)
   @JoinColumn()
   cart: Cart;
 
-  constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-  }
+  comparePassword = async (passwordToCompare: string): Promise<boolean> => {
+    return await compare(passwordToCompare, this.password);
+  };
 }

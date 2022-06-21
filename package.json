@@ -1,10 +1,11 @@
 {
-  "name": "api_users",
+  "name": "kenzie_buster",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev src/server.ts",
+    "start": "ts-node-dev --files --rs src/server.ts",
+    "dev": "ts-node-dev --files src/server.ts",
     "typeorm": "typeorm-ts-node-commonjs",
     "test": "NODE_ENV=test jest"
   },

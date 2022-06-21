@@ -1,23 +1,29 @@
-import { Entity, Column, PrimaryColumn, ManyToMany, JoinTable } from "typeorm";
-import { v4 as uuid } from "uuid";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  ManyToOne,
+  JoinTable,
+} from "typeorm";
 
-import { Product } from "./product.entity";
+import { Dvd, User } from "./index";
 
 @Entity()
 export class Cart {
-  @PrimaryColumn("uuid")
-  readonly id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id?: string;
 
-  @Column("float")
-  subtotal: number;
+  @Column({ default: false })
+  paid: boolean;
 
-  @ManyToMany((type) => Product, { eager: true })
+  @Column("float", { default: 0 })
+  total: number;
+
+  @OneToOne((type) => User, (user) => user.cart, { eager: true })
+  user: User;
+
+  @ManyToOne((type) => Dvd, { eager: true })
   @JoinTable()
-  products: Product[];
-
-  constructor() {
-    if (!this.id) {
-      this.id = uuid();
-    }
-  }
+  dvd: Dvd;
 }

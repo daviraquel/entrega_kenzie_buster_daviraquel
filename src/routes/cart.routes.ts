@@ -1,14 +1,18 @@
 import { Router } from "express";
 
-import cartAddProdController from "../controllers/cart/cartAddProd.controller";
-import cartDelProdController from "../controllers/cart/cartDelProd.controller";
+import { cartController } from "../controllers";
 import authUserMiddleware from "../middlewares/authUser.middleware";
+import checkEmptyCart from "../middlewares/checkEmptyCart.middleware";
 
 const routes = Router();
 
 export const cartRoutes = () => {
-  routes.post("/", authUserMiddleware, cartAddProdController);
-  routes.delete("/:productId", authUserMiddleware, cartDelProdController);
+  routes.put(
+    "/pay",
+    authUserMiddleware,
+    checkEmptyCart,
+    cartController.payCart
+  );
 
   return routes;
 };
