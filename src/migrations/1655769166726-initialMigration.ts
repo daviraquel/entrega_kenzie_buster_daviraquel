@@ -16,9 +16,7 @@ export class initialMigration1655769166726 implements MigrationInterface {
         INSERT INTO "users"
             ("name", "email", "password", "isAdmin")
         VALUES
-            ('${process.env.ADMIN_NAME}', '${
-        process.env.ADMIN_EMAIL
-      }', '${hashSync(process.env.ADMIN_PWD, 10)}', true)
+            ("kenzinho", "kenzie@mail.com", "umaSenhaForte!", true)
         `
     );
     }
