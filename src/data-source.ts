@@ -33,11 +33,3 @@ export const AppDataSource =
             ? ["dist/migrations/*.js"]
             : ["src/migrations/*.ts"],
       });
-
-// AppDataSource.initialize()
-//   .then(() => {
-//     console.log("Data Source Initialized");
-//   })
-//   .catch((err) => {
-//     console.error("Error during data source initialization", err);
-//   });
